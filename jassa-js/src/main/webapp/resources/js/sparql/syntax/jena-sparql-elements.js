@@ -297,7 +297,7 @@
 		for(var i = 0; i < bindings.length; ++i) {
 
 			var binding = bindings[i];
-			
+
 			var newBinding = {};
 			
 			$.each(binding, function(varName, node) {
@@ -505,7 +505,49 @@
 		    return this.query.getVarsMentioned();
 		}
 	});
-	
+
+    ns.ElementBind = Class.create(ns.Element,{
+        classLabel: 'jassa.sparql.ElementBind',
+
+        initialize: function(variable, expression){
+            this.expr = expression;
+            this.variable = variable;
+        },
+
+        getArgs: function(){
+            return [];
+        },
+
+        getExpr: function(){
+            return this.expr;
+        },
+
+        getVar: function(){
+            return this.variable;
+        },
+
+        getVarsMentioned: function(){
+            return _(this.expr.getVarsMentioned()).union(this.variable);
+        },
+
+        copy: function(){
+            return new ns.ElementBind(this.variable,this.expr);
+        },
+
+        copySubstitute: function(fnNodeMap) {
+            return new ns.ElementBind(rdf.getSubstitute(this.variable,  fnNodeMap),this.expr.copySubstitute(fnNodeMap));
+        },
+
+        flatten: function(){
+            return this;
+        },
+
+        toString: function(){
+            return "bind(" + this.expr + " as " + this.variable  +  ")";
+        }
+
+    });
+
 	ns.ElementFilter = Class.create(ns.Element, {
 	    classLabel: 'jassa.sparql.ElementFilter',
 
