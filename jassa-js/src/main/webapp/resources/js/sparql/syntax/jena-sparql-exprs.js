@@ -441,8 +441,28 @@
 		}
 	});
 
+    ns.E_NotExists = Class.create(ns.ExprFunction0, {
+        initialize: function($super, element) {
+            $super('jassa.sparql.E_NotExists');
+            this.element = element;
+        },
+
+        getVarsMentioned: function() {
+            return this.element.getVarsMentioned();
+        },
+
+
+        $copy: function() {
+            return new ns.E_NotExists(this.element);
+        },
+
+        toString: function() {
+            return 'Not Exists (' + this.element + ') ';
+        }
+    });
+
 	//ns.E_In = ns.E_OneOf
-	
+
 	ns.E_Str = Class.create(ns.ExprFunction1, {
 		initialize: function($super, subExpr) {
 			$super('str', subExpr);
