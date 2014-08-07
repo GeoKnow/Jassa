@@ -376,7 +376,7 @@
 					var t = ts[0];
 					
 					var s = t.getSubject();
-					var p = t.getProperty();
+					var p = t.getPredicate();
 					var o = t.getObject();
 					
 					result = v.equals(s) && p.isVariable() && o.isVariable();

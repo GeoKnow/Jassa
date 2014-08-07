@@ -705,42 +705,42 @@
   ns.Triple = Class.create({
     classLabel: 'jassa.rdf.Triple',
 
-    initialize: function(s, p, o) {
-      this.s = s;
-      this.p = p;
-      this.o = o;
+    initialize: function(subject, predicate, object) {
+      this.subject = subject;
+      this.predicate = predicate;
+      this.object = object;
     },
 
     toString: function() {
-      return this.s + ' ' + this.p + ' ' + this.o;
+      return this.subject + ' ' + this.predicate + ' ' + this.object;
     },
 
     copySubstitute: function(fnNodeMap) {
       var result = new ns.Triple(
-        ns.getSubstitute(this.s, fnNodeMap),
-        ns.getSubstitute(this.p, fnNodeMap),
-        ns.getSubstitute(this.o, fnNodeMap)
+        ns.getSubstitute(this.subject, fnNodeMap),
+        ns.getSubstitute(this.predicate, fnNodeMap),
+        ns.getSubstitute(this.object, fnNodeMap)
       );
       return result;
     },
 
     getSubject: function() {
-      return this.s;
+      return this.subject;
     },
 
-    getProperty: function() {
-      return this.p;
+    getPredicate: function() {
+      return this.predicate;
     },
 
     getObject: function() {
-      return this.o;
+      return this.object;
     },
 
     getVarsMentioned: function() {
       var result = [];
-      ns.Triple.pushVar(result, this.s);
-      ns.Triple.pushVar(result, this.p);
-      ns.Triple.pushVar(result, this.o);
+      ns.Triple.pushVar(result, this.subject);
+      ns.Triple.pushVar(result, this.predicate);
+      ns.Triple.pushVar(result, this.object);
       return result;
     }
   });
