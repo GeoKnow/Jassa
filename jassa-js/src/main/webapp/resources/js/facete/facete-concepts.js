@@ -1,10 +1,11 @@
 (function() {
 	
-	var sparql = Jassa.sparql;
+	var sparql = jassa.sparql;
 	
-	var rdf = Jassa.rdf;
+	var rdf = jassa.rdf;
+	var vocab = jassa.vocab;
 
-	var ns = Jassa.facete;
+	var ns = jassa.facete;
 
 	
 	/**
