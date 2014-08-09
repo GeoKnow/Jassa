@@ -76,7 +76,7 @@
             var filterElement = filterConcept.getElement();
             var newFilterElement = sparql.ElementUtils.createRenamedElement(filterElement, varMap);
             
-            var result = new facete.Concept(newFilterElement, attrVar);
+            var result = new ns.Concept(newFilterElement, attrVar);
 	        
             return result;
 	    },
@@ -172,7 +172,7 @@
             var vs = !subjectVar ? rdf.NodeFactory.createVar('s') :
                 (subjectVar instanceof rdf.Node ? subjectVar : rdf.NodeFactory.createVar(subjectVar));            
 
-            var result = new facete.Concept(new sparql.ElementTriplesBlock([new rdf.Triple(vs, vocab.rdf.type, type)]), vs);      
+            var result = new ns.Concept(new sparql.ElementTriplesBlock([new rdf.Triple(vs, vocab.rdf.type, type)]), vs);      
             return result;
         },
 
