@@ -294,6 +294,18 @@ flow.asList()
 	});
 ```
 
+Note, that Sponate also allows you to use predicates as object ids:
+
+```js
+{
+  template: {
+    id: '?p',
+    values: ['?o']
+  },
+  from: '?s ?p ?o'
+}
+```
+
 ## Debian Package
 TODO: Finish this section
 There exists a debian package for the server functionality.
