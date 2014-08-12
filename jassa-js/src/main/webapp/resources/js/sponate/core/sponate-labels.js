@@ -250,8 +250,8 @@
             
             var els = [];
             els.push(new sparql.ElementTriplesBlock([ new rdf.Triple(s, p, o)] ));
-            els.push(new sparql.ElementFilter([propFilter]));
-            els.push(new sparql.ElementFilter([langConstraint]));
+            els.push(new sparql.ElementFilter(propFilter));
+            els.push(new sparql.ElementFilter(langConstraint));
             
             var langElement = new sparql.ElementGroup(els);
             

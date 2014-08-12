@@ -88,7 +88,7 @@
 			
 			var element = new sparql.ElementGroup([
                 new sparql.ElementTriplesBlock([triple]),
-                new sparql.ElementFilter([exprFinal])
+                new sparql.ElementFilter(exprFinal)
             ]);
 			
 			var optional = new sparql.ElementOptional(element); 				
@@ -109,7 +109,7 @@
 		if(finalOrs.length > 0) {
 			//console.log("Final ors: ", finalOrs);
 			var finalOr = sparql.orify(finalOrs);
-			var finalFilter = new sparql.ElementFilter([finalOr]);
+			var finalFilter = new sparql.ElementFilter(finalOr);
 			
 			result.push(finalFilter);
 		}
@@ -343,7 +343,7 @@
 	ns.createDescribeQueryNodes = function(nodes) {		
 		var s = sparql.Node.v("__s");
     // FIXME: E_In not defined
-		var element = new sparql.ElementFilter([new sparql.E_In(s, nodes)]);
+		var element = new sparql.ElementFilter(new sparql.E_In(s, nodes));
 		var result = ns.createDescribeQuery(element, s);
 		return result;
 	};
@@ -725,7 +725,7 @@
 
 		var element = new sparql.ElementGroup();
 		element.elements.push(optional);
-		element.elements.push(new sparql.ElementFilter([filterExpr]));
+		element.elements.push(new sparql.ElementFilter(filterExpr));
 
 		return element;
 	};
@@ -1117,7 +1117,7 @@
 		//console.log("geomVar", geomVar);
     // FIXME: sparql.E_In not defined
 		var filterExpr = (uris.length === 0) ? sparql.NodeValue.False : new sparql.E_In(geomVarExpr, uris);
-		var filterElement = new sparql.ElementFilter([filterExpr]);
+		var filterElement = new sparql.ElementFilter(filterExpr);
 
 		subQuery.elements.push(filterElement);
 		//subQuery.projectVars.add(inferredDriver.variable);
@@ -1205,7 +1205,7 @@
 		//console.log("geomVar", geomVar);
     // FIXME: sparql.E_In not defined
 		var filterExpr = (uris.length === 0) ? sparql.NodeValue.False : new sparql.E_In(geomVarExpr, uris);
-		var filterElement = new sparql.ElementFilter([filterExpr]);
+		var filterElement = new sparql.ElementFilter(filterExpr);
 		
 		elements.push(filterElement);
 

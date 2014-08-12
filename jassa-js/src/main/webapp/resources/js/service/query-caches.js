@@ -193,7 +193,7 @@
 	        var query = this.query.clone();
 	        
 	        var filterExpr = new sparql.E_OneOf(this.indexExpr, nodes);
-	        var filterElement = new sparql.ElementFilter([filterExpr]);
+	        var filterElement = new sparql.ElementFilter(filterExpr);
 	        query.getElements().push(filterElement);
 	        
 	        var qe = this.sparqlService.createQueryExecution(query);

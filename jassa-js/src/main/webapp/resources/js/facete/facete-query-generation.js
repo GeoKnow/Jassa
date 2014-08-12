@@ -85,7 +85,7 @@
 				expr = new sparql.E_LogicalNot(expr);
 			}
 
-			result = new sparql.ElementFilter([expr]);
+			result = new sparql.ElementFilter(expr);
 		}
 		
 		return result;
@@ -481,7 +481,7 @@
 			if(singleStep) {
 				var exprVar = new sparql.ExprVar(propertyVar);
 				var expr = new sparql.E_Equals(exprVar, sparql.NodeValue.makeNode(singleProperty));
-				facetElements.push(new sparql.ElementFilter([expr]));
+				facetElements.push(new sparql.ElementFilter(expr));
 			}
 			
 			
