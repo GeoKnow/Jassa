@@ -53,6 +53,13 @@
             var limit = query.getLimit();
             var offset = query.getOffset();
             
+            // 2014-08-13 This query failed on http://dbpedia.org/sparql Select * { ?s ?p ?o } Offset 1
+            // with Virtuoso 22023 Error SR350: TOP parameter < 0
+            // We add an extra high limit to the query
+            if(offset != null && limit == null) {
+                limit = 2000000000;
+            }
+            
             var hasAggregate = this.hasAggregate(query);
             
             var isTransformNeeded = orderBy.length > 0 && (limit || offset) || hasAggregate;
@@ -79,5 +86,5 @@
         }        
     });
 
-})();	
-	
+})();   
+
