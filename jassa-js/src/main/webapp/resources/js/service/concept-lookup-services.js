@@ -538,12 +538,18 @@
             ns.ServiceUtils.fetchList(query, concept.getVar()).pipe(function(items) {
                 
                 self.keyLookupService.lookup(items).pipe(function(map) {
-                    deferred.resolve(map);
+
+					//deferred.resolve(map);
+
+		            var entries = map.entries();
+	            	var r = _(entries).values();
+					deferred.resolve(map);
+
                 }).fail(function() {
-                    deferred.fail();
+                    deferred.reject();
                 });
             }).fail(function() {
-                deferred.fail();
+                deferred.reject();
             });
             
             return deferred.promise();

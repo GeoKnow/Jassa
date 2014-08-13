@@ -1,3 +1,7 @@
+Below notes are probably outdated and the raised issues solved already!
+It is pretty clear now how transparent label aggregation can be done.
+
+
 A major goal of Sponate is to unify access to labels and provide conflict resolution.
 
 

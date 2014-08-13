@@ -161,6 +161,7 @@
                                 <param>geo/GeoDataSourceUtils.js</param>
 								
 								<param>geo/geo-sponate-utils.js</param>
+								<param>additions-to-jassa-core.js</param>
 							</jsSourceFiles>
 							
 

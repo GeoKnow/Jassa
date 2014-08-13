@@ -2,7 +2,7 @@
 	
 	var util = Jassa.util;
 	var ns = Jassa.service;
-	
+
 	
 	ns.ResultSet = Class.create(util.Iterator, {
 		getVarNames: function() {

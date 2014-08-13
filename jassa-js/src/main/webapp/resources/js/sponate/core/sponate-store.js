@@ -351,8 +351,8 @@
             // Combine innerElement, concept and the criteria
             var attrConcept = new facete.Concept(innerElement, idVar);
 
-            // If there is no filterConcept, the result is the mappingConcept
-            // If there is a filterConcept and NO leftJoin, the result is the combination of the mappingConcept and the filterConcept
+            // If there is no filterConcept, the result is the attrConcept
+            // If there is a filterConcept and NO leftJoin, the result is the combination of the attrConcept and the filterConcept
             //    if there is a leftJoin
             //       if there is a leftJoin AND there are NO filter criteria, the result is just the filterConcept
             //    if there are filter criteria, the result is the l
