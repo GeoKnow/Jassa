@@ -331,6 +331,7 @@
 	});
 */
 	 
+/*
 	{
 	    var sparqlService = new service.SparqlServiceHttp('http://dbpedia.org/sparql', ['http://dbpedia.org']);
 	    //sparqlService = new service.SparqlServiceVirtFix(sparqlService);
@@ -358,7 +359,7 @@
 		    alert(JSON.stringify(countInfo)); 
 		});
 	}
-	
+*/
 	//throw 'done';
 	
 	
