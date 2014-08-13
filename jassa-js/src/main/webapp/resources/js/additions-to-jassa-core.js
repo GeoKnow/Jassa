@@ -292,7 +292,7 @@
 
 	        var countConcept;
             if(this.isLeftJoin) {
-                var query = facete.ConceptUtils.createAttrQuery(this.attrQuery, this.attrVar, this.isLeftJoin, filterConcept, limit, offset);
+                var query = facete.ConceptUtils.createAttrQuery(this.attrQuery, this.attrVar, this.isLeftJoin, filterConcept, itemLimit, offset);
 
                 countConcept = new facete.Concept(query.getQueryPattern(), this.attrVar);
             } else {
