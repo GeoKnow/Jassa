@@ -20,7 +20,7 @@
 	
 	ns.LookupServiceSparqlQuery = Class.create(ns.LookupServiceBase, {
 	    initialize: function(sparqlService, query, v) {
-	        this.sparqlService = query;
+	        this.sparqlService = sparqlService;
 	        this.query = query;
 	        this.v = v;
 	    },
@@ -37,7 +37,7 @@
 	        } else {
 	            var q = this.query.clone();
 
-	            var filter = new ElementFilter(new sparql.E_OneOf(v, uris));
+	            var filter = new sparql.ElementFilter(new sparql.E_OneOf(new sparql.ExprVar(v), uris));
 
 	            var element = new sparql.ElementGroup([q.getQueryPattern(), filter]);
 	            q.setQueryPattern(element);
@@ -220,8 +220,8 @@
         else {
             if(isLeftJoin) {
                 newAttrElement = new sparql.ElementGroup([
-                    new ElementOptional(attrElement),
-                    newFilterElement
+                    newFilterElement,
+                    new sparql.ElementOptional(attrElement)
                 ]);
             } else {
                 newAttrElement = new sparql.ElementGroup([
@@ -267,7 +267,7 @@
 	        this.sparqlService = sparqlService;
 	        this.attrQuery = attrQuery;
 	        this.attrVar = attrVar;
-	        this.isLeftJoin = isLeftJoin;
+	        this.isLeftJoin = isLeftJoin == null ? true : isLeftJoin;
 	    },
 	    
 	    fetchItems: function(filterConcept, limit, offset) {
@@ -417,14 +417,12 @@
          *
          */
         execSelect: function() {
-            //return this.createQueryExecution(this.query.clone()).execSelect();
+            var q = this.query.clone();            
             var x = ns.PageExpandUtils.computeRange(q.getLimit(), q.getOffset(), this.pageSize);
             
-            var q = this.query.clone();            
             q.setLimit(x.limit);
             q.setOffset(x.offset);
                         
-            //var qe = this.sparqlService.createQueryExecution(q);
             var qe = this.createQueryExecution(q);
             var p = qe.execSelect();
             var result = p.pipe(function(rs) {
@@ -475,6 +473,8 @@
     });
 
 
+
+
 /*
     var sparqlService = new service.SparqlServiceHttp('http://dbpedia.org/sparql', ['http://dbpedia.org']);
     sparqlService = new service.SparqlServiceVirtFix(sparqlService);
@@ -490,5 +490,104 @@
     });
 */
 
+
+	
+	facete.ConceptUtils.fetchItems = function(sparqlService, concept, limit, offset) {
+	    var query = this.createQueryList(concept, limit, offset);
+	    var qe = sparqlService.createQueryExecution(query);
+	    
+	    var result = qe.execSelect().pipe(function(rs) {
+	        var r = service.ServiceUtils.resultSetToList(rs, concept.getVar());
+	        return r;
+	    });
+
+	    return result;
+	};
+
+
+	
+	ns.ListServiceConcept = Class.create(ns.ListService, {
+	    initialize: function(sparqlService) {
+	        this.sparqlService = sparqlService;
+	    },
+	    
+	    fetchItems: function(concept, limit, offset) {
+	        var result = facete.ConceptUtils.fetchItems(this.sparqlService, concept, limit, offset);
+	        return result;
+	    },
+	    
+	    fetchCount: function(concept, itemLimit, rowLimit) {
+	        var result = ns.ServiceUtils.fetchCountConcept(this.sparqlService, concept, itemLimit, rowLimit);
+	        return result;
+	    }
+	});
+	
+    ns.ListServiceConceptKeyLookup = Class.create(ns.ListService, {
+        // initialize: function(conceptLookupService, keyLookupService) {
+        initialize: function(keyListService, keyLookupService, isLeftJoin) {
+            this.keyListService = keyListService;
+            this.keyLookupService = keyLookupService;
+            this.isLeftJoin = isLeftJoin == null ? true : isLeftJoin;
+        },
+        
+        fetchItems: function(concept, limit, offset) {
+            var deferred = jQuery.Deferred();
+            
+            var self = this; 
+            
+            var promise = this.keyListService.fetchItems(concept, limit, offset);            
+            promise.pipe(function(keys) {
+                
+                self.keyLookupService.lookup(keys).pipe(function(map) {
+
+                    //deferred.resolve(map);
+
+                    var entries = map.entries();
+                    var r = _(entries).values();
+                    deferred.resolve(r);
+
+                }).fail(function() {
+                    deferred.reject();
+                });
+            }).fail(function() {
+                deferred.reject();
+            });
+            
+            return deferred.promise();
+        },
+        
+        fetchCount: function(concept, itemLimit, rowLimit) {
+            var result;
+            if(this.isLeftJoin) {
+                result = this.keyListService.fetchCount(concept, itemLimit, rowLimit);
+            } else {
+                var self = this;
+                var deferred = jQuery.Deferred();
+
+                var p = this.keyListService.fetchItems(concept, itemLimit);
+                p.pipe(function(items) {
+                    var p2 = self.keyLookupService.lookup(items);
+                    p2.pipe(function(map) {
+                        var keyList = map.keyList();
+                        var count = keyList.length;
+                        var r = {
+                            count: count,
+                            hasMoreItems: itemLimit == null ? false : null // absence of a value indicates 'unknown'
+                        };
+                        deferred.resolve(r);
+                    }).fail(function() {
+                        deferred.reject();
+                    });
+                }).fail(function() {
+                    deferred.reject();
+                });
+                
+                result = deferred.promise();
+            }
+            
+            return result;
+        }
+    });
+	
 })();
 
