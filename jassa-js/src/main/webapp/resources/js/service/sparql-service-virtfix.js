@@ -56,17 +56,21 @@
             // 2014-08-13 This query failed on http://dbpedia.org/sparql Select * { ?s ?p ?o } Offset 1
             // with Virtuoso 22023 Error SR350: TOP parameter < 0
             // We add an extra high limit to the query
-            if(offset != null && limit == null) {
+            var isLimitUpdateNeeded = offset != null && limit == null;
+            var hasAggregate = this.hasAggregate(query);
+            var isTransformNeeded = orderBy.length > 0 && (limit || offset) || hasAggregate;
+
+            var isCloneNeeded = isLimitUpdateNeeded || isTransformNeeded;
+
+            var q = isCloneNeeded ? query.clone() : query;
+            
+            if(isLimitUpdateNeeded) {
                 limit = 2000000000;
+                q.setLimit(limit);
             }
             
-            var hasAggregate = this.hasAggregate(query);
-            
-            var isTransformNeeded = orderBy.length > 0 && (limit || offset) || hasAggregate;
-            
-            var q;
             if(isTransformNeeded) {
-                var subQuery = query.clone();
+                var subQuery = q;
                 subQuery.setLimit(null);
                 subQuery.setOffset(null);
                 
@@ -75,12 +79,9 @@
                 q.getElements().push(e);
                 q.setLimit(limit);
                 q.setOffset(offset);
-                q.setResultStar(true);
-                
-            } else {
-                q = query;
+                q.setResultStar(true);                
             }
-            
+
             var result = this.sparqlService.createQueryExecution(q);
             return result;
         }        
