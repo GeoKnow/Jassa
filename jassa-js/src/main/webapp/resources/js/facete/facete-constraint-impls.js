@@ -154,7 +154,7 @@
         },
         
         createElementsAndExprs: function(facetNode) {
-            var result = ns.ConstraintUtils.createConstraintRegex(facetNode, this.path, this.regexStr);
+            var result = ns.ConstraintUtils.createConstraintRegex(facetNode, this.path, this.value.getLiteralLexicalForm());
             return result;
         }
     });
