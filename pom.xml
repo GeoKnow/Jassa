@@ -4,7 +4,7 @@
 
 	<groupId>org.aksw.jassa</groupId>
 	<artifactId>jassa-parent</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.8.0</version>
 	<packaging>pom</packaging>
 
 	<name>Jassa - Parent</name>
@@ -29,11 +29,11 @@
 
 	<modules>
 		<!-- <module>jassa-js</module> -->
-		<module>jassa-core</module>
-		<module>jassa-servlets</module>
-		<module>jassa-server</module>
-		<module>jassa-debian-tomcat-common</module>
-		<module>jassa-debian-tomcat7</module>
+<!--		<module>jassa-core</module> -->
+<!--		<module>jassa-servlets</module> -->
+<!--		<module>jassa-server</module> -->
+<!--		<module>jassa-debian-tomcat-common</module> -->
+<!--		<module>jassa-debian-tomcat7</module> -->
 	</modules>
 
 
