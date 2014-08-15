@@ -309,7 +309,7 @@ Note, that Sponate also allows you to use predicates as object ids:
 
 #### Roadmap
 We are working on the following extensions:
-* Support arrays of items without the need to specify an `id` - i.e. `values: ['?o']` instead of `values: [{id: '?o'}].
+* Support arrays of items without the need to specify an `id` - i.e. `values: ['?o']` instead of `values: [{id: '?o'}]`.
 * Support for references between Sponate mappings:
 
 ```js
