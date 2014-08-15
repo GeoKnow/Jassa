@@ -318,8 +318,9 @@ var mapping  = [{
   template: [{
     id: '?s',
     name: {
-      $ref: { target: 'labels', on: '?l', join: true, attr: 'label', copy: true }
-    }
+      $ref: { target: 'labels', on: '?s', join: true, attr: 'label', copy: true }
+    },
+    from: '?s a <http://dbpedia.org/ontology/Castle>'
   }]
 }]
 
@@ -327,7 +328,7 @@ var mapping  = [{
 
 The attributes of `$ref` mean the following:
 * target: The name of the target mapping that is referred to
-* on: Which variable of the referencing map should be joined with the target map's variable on the `id` field
+* on: Which variable of the referencing map should be joined with the target map's variable on the `id` field (if omitted, the outer-most `id` attribute will be used)
 * attr: The attribute in the target mapping which which will become the value of the reference
 * join: If false, nested lookups will be performed, otherwise, the reference will result in a SPARQL left join
 * copy: If false, only a single object will be created which will be referred to by all references. If true, each reference receives its own copy.
