@@ -318,8 +318,6 @@ var mapping  = [{
   template: [{
     id: '?s',
     name: {
-      // Use a join (rather than nested lookups) with the label map on ?l (labels.?s is implicit), and refer to the label attribute
-      // Copy: true=create a copy of the target's json document; otherwise: all references based on the same id will point to the same target reference object
       $ref: { target: 'labels', on: '?l', join: true, attr: 'label', copy: true }
     }
   }]
