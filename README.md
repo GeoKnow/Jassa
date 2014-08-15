@@ -244,8 +244,8 @@ facetService.fetchFacets()
 
 ### Sponate
 
-Sponate is a SPARQL-to-JSON mapper.
-TODO Add more description...
+Sponate is a SPARQL-to-JSON (or JavaScript objects, if you prefer) mapper: Based on a SPARQL result set, it aggregates the information spread accross the result set rows into javascript objects according to a specified template. Thereby, objects are identified based on the values of the templates' `id` fields.
+Brackets (`[`, `]`) indicate lists of objects. Sponate offers a flow API - similar to MongoDB - for making queries over the mappings, as shown below.
 
 ```js
 var service = jassa.service;
@@ -298,13 +298,42 @@ Note, that Sponate also allows you to use predicates as object ids:
 
 ```js
 {
+  name: 'objectsPerPredicate',
   template: {
     id: '?p',
-    values: ['?o']
+    values: [{id: '?o'}]
   },
   from: '?s ?p ?o'
 }
 ```
+
+### Roadmap
+We plan on the following extensions:
+* Support arrays of items without the need to specify an `id` - i.e. `values: ['?o']` instead of `values: [{id: '?o'}].
+* We are working on adding support for references between Sponate mappings:
+
+```js
+var mapping  = [{
+  name: 'castles',
+  template: [{
+    id: '?s',
+    name: {
+      // Use a join (rather than nested lookups) with the label map on ?l (labels.?s is implicit), and refer to the label attribute
+      // Copy: true=create a copy of the target's json document; otherwise: all references based on the same id will point to the same target reference object
+      $ref': { target: 'labels', on: '?l', join: true, attr: 'label', copy: true }
+    }
+  }]
+}]
+
+```
+
+The attributes of `$ref` mean the following:
+* target: The name of the target mapping that is referred to
+* on: Which variable of the referencing map should be joined with the target map's variable on the `id` field
+* attr: The attribute in the target mapping which which will become the value of the reference
+* join: If false, nested lookups will be performed, otherwise, the reference will result in a SPARQL left join
+* copy: If false, only a single object will be created which will be referred to by all references. If true, each reference receives its own copy.
+
 
 ## Debian Package
 TODO: Finish this section
