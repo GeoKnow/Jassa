@@ -307,10 +307,10 @@ Note, that Sponate also allows you to use predicates as object ids:
 }
 ```
 
-### Roadmap
-We plan on the following extensions:
+#### Roadmap
+We are working on the following extensions:
 * Support arrays of items without the need to specify an `id` - i.e. `values: ['?o']` instead of `values: [{id: '?o'}].
-* We are working on adding support for references between Sponate mappings:
+* Support for references between Sponate mappings:
 
 ```js
 var mapping  = [{
@@ -320,7 +320,7 @@ var mapping  = [{
     name: {
       // Use a join (rather than nested lookups) with the label map on ?l (labels.?s is implicit), and refer to the label attribute
       // Copy: true=create a copy of the target's json document; otherwise: all references based on the same id will point to the same target reference object
-      $ref': { target: 'labels', on: '?l', join: true, attr: 'label', copy: true }
+      $ref: { target: 'labels', on: '?l', join: true, attr: 'label', copy: true }
     }
   }]
 }]
