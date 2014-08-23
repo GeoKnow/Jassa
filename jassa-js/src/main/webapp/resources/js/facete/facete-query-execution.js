@@ -132,7 +132,7 @@
             var self = this;
             $.when.apply(window, promises).pipe(function(childFacetCountInfo, facetItems) {
 //console.log('facetItems:', facetItems);
-                var childFacetCount = childFacetCount.count;
+                var childFacetCount = childFacetCountInfo.count;
                 baseData.childFacetCount = childFacetCount;
 
                 var o = limit ? Math.floor((offset || 0) / limit) : 0;
