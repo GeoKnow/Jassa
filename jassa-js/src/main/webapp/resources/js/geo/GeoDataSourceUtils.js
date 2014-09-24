@@ -24,24 +24,30 @@
             lookupServiceLabels = new service.LookupServiceTransform(lookupServiceLabels, function(doc, id) {
                 var result = {
                     shortLabel: doc
-                };                    
+                };
                 return result;
             });
-                
+
             var augmenterLabels = new service.AugmenterLookup(lookupServiceLabels);
             bboxListService = new service.ListServiceAugmenter(bboxListService, augmenterLabels);
-            
+
             // Also add style information
             var lookupServiceStyle = new service.LookupServiceConst(attrs);
-    
+
             var augmenterStyle = new service.AugmenterLookup(lookupServiceStyle);
             bboxListService = new service.ListServiceAugmenter(bboxListService, augmenterStyle);
-            
+            bboxListService.fetchItems(null, limit, offset);
+//            bboxListService.fetchCount(null, 5, 10000);
+//            {
+//                count: soweitsHaltGing
+//                hasMoreItems: true
+//            }
+
             // Wrap the list service with clustering support
             var result = new service.DataServiceBboxCache(bboxListService, 1500, 500, 2);
-            
+
             return result;
         }
-    };    
-        
+    };
+
 })();

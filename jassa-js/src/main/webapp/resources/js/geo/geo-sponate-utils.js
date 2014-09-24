@@ -29,7 +29,8 @@
                 lon: vx, // '?x',
                 lat: vy, // '?y'
                 wkt: function(b) {
-					var result = rdf.NodeFactory.createTypedLiteralFromString('POINT(' + b.get(vx).getLiteralValue() + ' ' + b.get(vy).getLiteralValue() + ')', 'http://www.opengis.net/ont/geosparql#wktLiteral');
+                    var result = 'POINT(' + b.get(vx).getLiteralValue() + ' ' + b.get(vy).getLiteralValue() + ')';
+					//var result = rdf.NodeFactory.createTypedLiteralFromString(result, 'http://www.opengis.net/ont/geosparql#wktLiteral');
 					return result;
 				}
             }],
