@@ -375,8 +375,8 @@
 	        this.timeout = timeout;
 	    },
 	    
-	    createQueryExecution: function() {
-	        var result = this.sparqlService.createQueryExecution(this.query);
+	    createQueryExecution: function(q) {
+	        var result = this.sparqlService.createQueryExecution(q || this.query);
 	        result.setTimeout(this.timeout);
 	        return result;
 	    },
